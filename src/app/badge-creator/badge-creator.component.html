@@ -1,0 +1,12 @@
+<!-- config-viewer.component.html -->
+<form [formGroup]="form">
+  <div *ngFor="let section of config">
+    <h3>{{ section.name }}</h3>
+    <div formGroupName="{{ section.id }}">
+      <app-section-renderer
+        [section]="section.section"
+        [parentForm]="asFormGroup(form.get(section.id.toString()))">
+      </app-section-renderer>
+    </div>
+  </div>
+</form>
