@@ -27,6 +27,11 @@ interface ConfigSection {
   section: Array<BoolSection | SSelectSection | ConfigSection>;
 }
 
+interface BadgeConfig {
+  id: number;
+  section: ConfigSection[];
+}
+
 interface FullConfig {
   [index: number]: ConfigSection;
 }
@@ -43,5 +48,5 @@ function isConfigSection(item: any): item is ConfigSection {
   return item.type === 'section';
 }
 
-export type {FullConfig, ConfigSection, BoolSection, SSelectSection};
+export type {FullConfig, ConfigSection, BoolSection, SSelectSection, BadgeConfig};
 export {isBoolSection, isSSelectSection, isConfigSection};

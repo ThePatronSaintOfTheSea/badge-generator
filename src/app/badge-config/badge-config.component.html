@@ -1,0 +1,9 @@
+<div class="badge">
+  <form [formGroup]="formGroup">
+    <app-config-section
+      *ngFor="let section of config.section"
+      [section]="section"
+      [formGroup]="asFormGroup(formGroup.get(section.id.toString()))"
+    ></app-config-section>
+  </form>
+</div>

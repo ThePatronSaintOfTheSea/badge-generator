@@ -6,18 +6,18 @@ import {isBoolSection, isSSelectSection, isConfigSection} from './globals';
 @Injectable({ providedIn: 'root' })
 export class FormBuilderService {
   buildForm(section: ConfigSection): FormGroup {
-    const group: any = {};
-
+    const formGroup = new FormGroup({});
     section.section.forEach(item => {
       if (isBoolSection(item)) {
-        group[item.id.toString()] = new FormControl(item.default);
+        formGroup.addControl(item.id.toString(), new FormControl(item.default))
       } else if (isSSelectSection(item)) {
-        group[item.id.toString()] = new FormControl(item.default);
+        formGroup.addControl(item.id.toString(), new FormControl(item.default))
       } else if (isConfigSection(item)) {
-        group[item.id.toString()] = this.buildForm(item);
+        formGroup.addControl(item.id.toString(), this.buildForm(item));
       }
     });
 
-    return new FormGroup(group);
+
+    return formGroup;
   }
 }
