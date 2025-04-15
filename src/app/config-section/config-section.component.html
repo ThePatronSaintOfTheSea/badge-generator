@@ -1,0 +1,35 @@
+<form >
+<div [formGroup]="formGroup">
+  <h3>{{ section.name }}</h3>
+  <div *ngFor="let item of section.section">
+
+    <!-- Boolean -->
+    <div *ngIf="isBool(item)">
+      <label>
+        <input type="checkbox" [formControlName]="item.id.toString()" />
+        {{ item.name }}
+      </label>
+    </div>
+
+    <!-- Single Select -->
+    <div *ngIf="isSSelect(item)">
+      <label>{{ item.name }}
+        <select [formControlName]="item.id.toString()">
+          <option *ngFor="let opt of item.values" [value]="opt.value">
+            {{ opt.value }}
+          </option>
+        </select>
+      </label>
+    </div>
+
+    <!-- Nested Section -->
+    <div *ngIf="isNestedSection(item)">
+      <app-config-section
+        [section]="item"
+        [formGroup]="asFormGroup(formGroup.get(item.id.toString()))"
+      ></app-config-section>
+    </div>
+
+  </div>
+</div>
+</form>
