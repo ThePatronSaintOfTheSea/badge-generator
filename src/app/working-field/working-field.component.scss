@@ -1,5 +1,28 @@
-.badge-list {
+.centered {
   display: flex;
-  margin: 100px;
-  max-width: 10%;
+  flex-direction: row;
+  justify-content: center;
 }
+
+.working-field {
+  @extend .centered;
+  margin-top: 50px;
+}
+
+.badge-with-image {
+  //justify-content: center;
+  //flex: 1 1 0;
+  //display: flex;
+  flex-direction: column;
+  //align-items: center;
+  //height: 100%;
+  //margin: 0;
+  //max-width: 10%;
+}
+
+.badge {
+  align-content: center;
+  max-height: 80px;
+  //display: flex;
+}
+

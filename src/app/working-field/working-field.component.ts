@@ -11,10 +11,8 @@ import {BadgeConfigComponent} from '../badge-config/badge-config.component';
 @Component({
   selector: 'app-working-field',
   imports: [
-    ConfigSectionComponent,
     FormsModule,
     NgForOf,
-    NgIf,
     ReactiveFormsModule,
     BadgeConfigComponent
   ],
@@ -25,31 +23,36 @@ export class WorkingFieldComponent implements OnInit {
   serverUrl = "http://127.0.0.1:8003/"
   configs: BadgeConfig[] = [];
   forms: FormGroup[] = [];
-  imageUrl: string = '';
+  imageUrls: string[] = [];
   constructor(private formBuilder: FormBuilderService, private httpClient: HttpClient) {}
 
   ngOnInit(): void {
     this.httpClient.get<BadgeConfig[]>(this.serverUrl + "badge-generator/configs", {params: {rank: "Котенок"}}).subscribe(response => {
       this.configs = response;
-      this.configs.forEach(config => {
+      this.configs.forEach((config, idx) => {
         const formGroup = new FormGroup({});
         formGroup.addControl("id", new FormControl(config.id));
         config.section.forEach(section => {
           formGroup.addControl(section.id.toString(), this.formBuilder.buildForm(section))
         });
-        formGroup.valueChanges.pipe(debounceTime(300)).subscribe(() => this.onSubmit(formGroup));
+
         this.forms.push(formGroup);
+        this.imageUrls.push('');
+
+        formGroup.valueChanges.pipe(debounceTime(300)).subscribe(() => this.onSubmit(formGroup, idx));
+        this.onSubmit(formGroup, idx)
+
       });
     })
   }
 
-  onSubmit(form: FormGroup) {
+  onSubmit(form: FormGroup, imageIdx: number) {
     const result = form.value;
     console.log('Form object:', form);
     console.log('Form value:', form.value);
 
-    this.httpClient.post('http://127.0.0.1:8000/generate', result, { responseType: 'blob' }).subscribe(res => {
-      this.imageUrl = URL.createObjectURL(res);
+    this.httpClient.post(this.serverUrl + 'badge-generator/generate', result, { responseType: 'blob' }).subscribe(res => {
+      this.imageUrls[imageIdx] = URL.createObjectURL(res);
     });
   }
 

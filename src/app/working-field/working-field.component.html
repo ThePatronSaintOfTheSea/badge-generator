@@ -1,10 +1,12 @@
-<div class="badge-list">
-  <div *ngFor="let form of forms; let i = index">
+<div class="working-field">
+  <div *ngFor="let form of forms; let i = index" class="badge-with-image">
     <app-badge-config
       [formGroup]="form"
       [config]="configs[i]"
     ></app-badge-config>
+    <div class="centered">
+      <img class="badge" [src]="imageUrls[i]" alt="Generated Image">
+    </div>
   </div>
 </div>
-<img *ngIf="imageUrl" [src]="imageUrl" alt="Generated Image"/>
 

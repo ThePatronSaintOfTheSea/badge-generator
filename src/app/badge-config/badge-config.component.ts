@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {ConfigSectionComponent} from '../config-section/config-section.component';
 import {AbstractControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {NgForOf} from '@angular/common';
+import {NgForOf, NgIf} from '@angular/common';
 import {BadgeConfig} from '../globals';
 
 @Component({
@@ -10,7 +10,8 @@ import {BadgeConfig} from '../globals';
     ConfigSectionComponent,
     FormsModule,
     NgForOf,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgIf
   ],
   templateUrl: './badge-config.component.html',
   styleUrl: './badge-config.component.scss'
